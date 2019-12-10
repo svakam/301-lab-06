@@ -52,12 +52,50 @@ function Location(city, resultsNav) {
 // 3. As user, I want to request current weather info for location entered
 // Create route with method get and path of /weather. Use provided JSON
 app.get('/weather', (request, response) => {
-
+  let dailyForecastForCity = dailyWeather();
+  response.send(dailyForecastForCity);
 });
 
-//  Constructor to run received data's objects through
+let dailyWeather = () => {
+  // get the data
+  const weatherData = require('./data/darksky.json');
 
-// Return array of objects for each day of response which contains info for correct rendering
+  // navigate path down
+  let dailyData = weatherData.daily.data;
+
+  let forecastDay = '';
+  let time;
+  let dailyArray = [];
+  dailyData.forEach((forecast) => {
+    let forecasts = Object.entries(forecast);
+    forecasts.forEach((forecast) => {
+      forecast.forEach((element) => {
+        if (forecast.indexOf(element) === 0) {
+          forecastDay = forecast[forecast.indexOf(element)];
+          console.log(forecast.indexOf(element));
+          console.log(forecast);
+        }
+        else if (forecast.indexOf(element) === 1) {
+          time = forecast[forecast.indexOf(element)];
+        }
+      });
+    });
+
+    let eachDay = new Forecast(forecastDay, time);
+
+    // instantiate
+    dailyArray.push(eachDay);
+  });
+
+  // Return array of objects for each day of response which contains info for correct rendering
+  return dailyArray;
+};
+
+//  Constructor to run received data's objects through
+function Forecast(summary, time) {
+  this.forecast = summary;
+  this.time = time;
+}
 
 // Deploy to Heroku
 
