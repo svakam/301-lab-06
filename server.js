@@ -16,25 +16,25 @@ app.get('/location', (request, response) => {
   let city = request.query.data;
   let locationObject = searchLatLong(city);
 
-  // send data once lat and long obtained
+  // send data once lat and long obtained :)
   response.send(locationObject);
 });
 
-// gets data and makes objects with city name (from input) and partially navigated data
-// Return an object which contains the necessary information for correct client rendering. See the sample response.
+// gets data and makes objects with city name (from input) and partially navigated data :)
+// Return an object which contains the necessary information for correct client rendering. See the sample response. :)
 let searchLatLong = city => {
-  // get geodata and set it to variable
+  // get geodata and set it to variable :)
   const geoData = require('./data/geo.json');
   let resultsNav = geoData.results[0];
 
-  // make object instances that take in query (city name) and reference to obtained data to get info
+  // make object instances that take in query (city name) and reference to obtained data to get info :)
   const latLongObj = new Location(city, resultsNav);
 
   // send data back to function call
   return latLongObj;
 };
 
-// A constructor function will ensure that each object is created according to the same format when your server receives the external data. Ensure your code base uses a constructor function for this resource.
+// A constructor function will ensure that each object is created according to the same format when your server receives the external data. Ensure your code base uses a constructor function for this resource. :)
 function Location(city, resultsNav) {
   // eslint-disable-next-line camelcase
   this.search_query = city;
@@ -51,6 +51,9 @@ function Location(city, resultsNav) {
 
 // 3. As user, I want to request current weather info for location entered
 // Create route with method get and path of /weather. Use provided JSON
+app.get('/weather', (request, response) => {
+
+});
 
 //  Constructor to run received data's objects through
 
