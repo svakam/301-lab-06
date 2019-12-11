@@ -63,25 +63,35 @@ let dailyWeather = () => {
   // navigate path down
   let dailyData = weatherData.daily.data;
 
-  let forecastDay = '';
+  let summary;
   let time;
   let dailyArray = [];
-  dailyData.forEach((forecast) => {
-    let forecasts = Object.entries(forecast);
-    forecasts.forEach((forecast) => {
-      forecast.forEach((element) => {
-        if (forecast.indexOf(element) === 0) {
-          forecastDay = forecast[forecast.indexOf(element)];
-          console.log(forecast.indexOf(element));
-          console.log(forecast);
+  dailyData.forEach(day => {
+    let pairData = Object.entries(day);
+    pairData.forEach((pair) => {
+      pair.forEach((element) => {
+        if (element === 'time') {
+          time = pair[1];
         }
-        else if (forecast.indexOf(element) === 1) {
-          time = forecast[forecast.indexOf(element)];
+        if (element === 'summary') {
+          summary = pair[1];
         }
       });
     });
 
-    let eachDay = new Forecast(forecastDay, time);
+    // [
+    //   {
+    //     "time": 1540018800,
+    //     "summary": "Foggy in the morning."},
+    //   {
+    //     "time": 1540105200,
+    //     "summary": "Partly cloudy until afternoon."},
+    //   {
+    //     "time": 1540191600,
+    //     "summary": "Partly cloudy throughout the day."},
+    //   ]
+
+    let eachDay = new Forecast(summary, time);
 
     // instantiate
     dailyArray.push(eachDay);
